@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # BusSaathi — MSRTC Smart Transport Management System
 ### Avishkar Research Convention Prototype
 
@@ -100,3 +101,7 @@ It contains:
 * Technical justifications for choosing Firebase WebSockets over HTTP polling.
 * How the 15–20 second throttling algorithm preserves phone battery life.
 * Direct answers to the most common questions asked by Avishkar judges.
+=======
+# MSRTC-Live-Bus-Tracking-System
+A smart MSRTC bus tracking and fleet management system featuring real-time bus location tracking, a controller dashboard, route monitoring, and centralized fleet management.
+>>>>>>> f4a9f4ed3feacd50c9bece87f04002c8efdaa3c9
