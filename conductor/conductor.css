@@ -1,0 +1,109 @@
+/**
+ * BusSaathi - Conductor Stylesheet
+ * File: /conductor/conductor.css
+ * Optimized for mobile touchscreens, high contrast, and outdoor visibility
+ */
+
+/* Cockpit High-Contrast Banner */
+.cockpit-hero {
+  background: linear-gradient(135deg, var(--msrtc-dark) 0%, #2A472E 100%);
+  color: #ffffff;
+  border-radius: var(--msrtc-radius);
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: var(--msrtc-shadow);
+  border-bottom: 4px solid var(--msrtc-amber);
+}
+
+.cockpit-bus-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--msrtc-amber);
+  margin-bottom: 2px;
+}
+
+/* Master Trip Control Button */
+.btn-trip-toggle {
+  width: 100%;
+  padding: 20px;
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-trip-toggle.start-state {
+  background: linear-gradient(135deg, #1E8449, #27AE60);
+  color: #ffffff;
+}
+
+.btn-trip-toggle.start-state:hover {
+  background: linear-gradient(135deg, #196F3D, #229954);
+}
+
+.btn-trip-toggle.stop-state {
+  background: linear-gradient(135deg, #C0392B, #962D22);
+  color: #ffffff;
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+  0% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.7); }
+  70% { box-shadow: 0 0 0 14px rgba(192, 57, 43, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0); }
+}
+
+.btn-trip-toggle small {
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* Telemetry Dashboard Grid */
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.telemetry-box {
+  background: #F8F9F9;
+  border: 1px solid var(--msrtc-line);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.telemetry-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--msrtc-muted);
+}
+
+.telemetry-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--msrtc-dark);
+  margin-top: 2px;
+}
+
+/* Form Action Cards */
+.conductor-action-card {
+  background: #ffffff;
+  border: 1px solid var(--msrtc-line);
+  border-radius: var(--msrtc-radius);
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--msrtc-shadow);
+}

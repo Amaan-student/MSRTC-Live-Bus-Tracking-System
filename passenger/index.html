@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#C0392B">
+  <title>MSRTC Passenger Portal - BusSaathi Live Bus Tracker</title>
+
+  <!-- Typography & Styling -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="passenger.css">
+
+  <!-- Leaflet Map CSS (Free Open-Source Map Engine) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="../index.html" class="brand-group">
+        <div class="brand-emblem">ST</div>
+        <div class="brand-titles">
+          <h1>BusSaathi • Passenger Portal</h1>
+          <span>Live MSRTC Bus Tracking & Stand Schedules</span>
+        </div>
+      </a>
+      <div class="header-nav">
+        <a href="../index.html" class="header-btn">🏠 Home</a>
+        <a href="../conductor/index.html" class="header-btn">🎫 Conductor</a>
+        <a href="../controller/index.html" class="header-btn">🖥️ Controller</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="narrow-container">
+
+    <!-- VIEW A: SEARCH & SCHEDULES BROWSER -->
+    <div id="search-view">
+
+      <!-- Navigation Tabs -->
+      <div class="passenger-tabs">
+        <button id="tab-btn-number" class="passenger-tab active" type="button">
+          🔍 Bus Number
+        </button>
+        <button id="tab-btn-route" class="passenger-tab" type="button">
+          🛣️ Route Search
+        </button>
+        <button id="tab-btn-schedule" class="passenger-tab" type="button">
+          📅 All Schedules
+        </button>
+      </div>
+
+      <!-- Tab Panel 1: Search by Bus Number -->
+      <div id="panel-number" class="card">
+        <label for="bus-number-input" class="form-label">Search by MSRTC Bus Registration Number:</label>
+        <div style="display: flex; gap: 8px;">
+          <input 
+            type="text" 
+            id="bus-number-input" 
+            class="form-control" 
+            placeholder="e.g. MH 20 BL 4040, MH 12, MH 15..."
+            autocapitalize="characters"
+            autocomplete="off"
+          >
+          <button id="clear-search-btn" class="btn btn-outline btn-sm" type="button" title="Clear search">
+            ✕
+          </button>
+        </div>
+        <small style="color: var(--msrtc-muted); font-size: 12px; margin-top: 4px; display: block;">
+          Tip: Type partial or full registration numbers (e.g. "4040" or "MH20").
+        </small>
+      </div>
+
+      <!-- Tab Panel 2: Search by Route -->
+      <div id="panel-route" class="card" style="display: none;">
+        <div class="form-group">
+          <label for="from-city-select" class="form-label">From (Source City / Stand):</label>
+          <select id="from-city-select" class="form-control">
+            <option value="">-- Select Departure Stand --</option>
+          </select>
+        </div>
+
+        <div style="display: flex; justify-content: center; margin: -6px 0 8px;">
+          <button id="swap-route-btn" class="btn btn-outline btn-sm" type="button" title="Swap Origin and Destination">
+            ⇅ Swap Cities
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label for="to-city-select" class="form-label">To (Destination City / Stand):</label>
+          <select id="to-city-select" class="form-control">
+            <option value="">-- Select Arrival Stand --</option>
+          </select>
+        </div>
+
+        <button id="filter-route-btn" class="btn btn-primary btn-full" type="button">
+          Find Matching Buses
+        </button>
+      </div>
+
+      <!-- Tab Panel 3: Schedule & Availability Overview Banner -->
+      <div id="panel-schedule" class="card card-green" style="display: none;">
+        <h3 style="font-size: 17px; font-weight: 700; color: var(--msrtc-green); margin-bottom: 4px;">
+          Maharashtra State Transport Timetable & Availability
+        </h3>
+        <p style="font-size: 13px; color: var(--msrtc-muted); margin-bottom: 8px;">
+          Browse all scheduled services below. Live status indicates whether the bus has currently departed from the depot with live conductor GPS telemetry.
+        </p>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <span class="badge type-lal-pari">Lal Pari</span>
+          <span class="badge type-shivshahi">Shivshahi</span>
+          <span class="badge type-shivneri">Shivneri</span>
+          <span class="badge type-eshivai">e-Shivai</span>
+        </div>
+      </div>
+
+      <!-- Results Header & Counter -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin: 18px 0 10px;">
+        <h3 id="results-heading" style="font-size: 17px; font-weight: 700; color: var(--msrtc-dark);">
+          Available Buses
+        </h3>
+        <span id="results-count" class="badge badge-idle">Loading fleet...</span>
+      </div>
+
+      <!-- Bus Cards Container -->
+      <div id="buses-list-container">
+        <!-- Rendered dynamically by passenger.js -->
+      </div>
+
+    </div>
+
+    <!-- VIEW B: LIVE BUS TRACKER (LEAFLET MAP + OSRM) -->
+    <div id="tracker-view" style="display: none;">
+      
+      <!-- Back to List Bar -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <button id="back-to-search-btn" class="btn btn-outline btn-sm" type="button">
+          ← Back to Bus List
+        </button>
+        <button id="simulate-movement-btn" class="btn btn-accent btn-sm" type="button" title="Test demonstration mode for Avishkar viva">
+          ▶ Simulate Movement
+        </button>
+      </div>
+
+      <!-- Live Bus Status Overlay Card -->
+      <div class="tracker-header-card">
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <span id="track-bus-number" class="bus-plate">MH 20 BL 4040</span>
+              <span id="track-bus-type" class="badge type-shivshahi">Shivshahi</span>
+              <span id="track-bus-status" class="badge badge-live">Live GPS</span>
+            </div>
+            <div id="track-bus-route" class="bus-route-visual">
+              <span id="track-from">Pune</span> 
+              <span class="bus-route-arrow">➔</span> 
+              <span id="track-to">Chhatrapati Sambhajinagar</span>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div id="track-speed" style="font-size: 20px; font-weight: 800; color: var(--msrtc-dark);">-- km/h</div>
+            <span id="track-eta-pill" class="eta-pill">Calculating ETA...</span>
+          </div>
+        </div>
+
+        <!-- Trip Progress Bar -->
+        <div class="progress-container">
+          <div id="track-progress-bar" class="progress-bar"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--msrtc-muted);">
+          <span id="track-progress-text">Trip Progress: 0%</span>
+          <span id="track-last-updated">Waiting for GPS signal...</span>
+        </div>
+      </div>
+
+      <!-- Leaflet Map Canvas -->
+      <div id="map"></div>
+
+      <!-- Route Details Panel -->
+      <div class="card" style="margin-top: 14px;">
+        <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--msrtc-dark);">
+          Trip Information & Schedule Details
+        </h4>
+        <div class="grid-2" style="font-size: 14px;">
+          <div>
+            <span style="color: var(--msrtc-muted);">Scheduled Departure:</span>
+            <strong id="track-departure">--</strong>
+          </div>
+          <div>
+            <span style="color: var(--msrtc-muted);">Expected Duration:</span>
+            <strong id="track-duration">--</strong>
+          </div>
+          <div>
+            <span style="color: var(--msrtc-muted);">Conductor ID:</span>
+            <strong id="track-conductor">--</strong>
+          </div>
+          <div>
+            <span style="color: var(--msrtc-muted);">Tracking Method:</span>
+            <strong>Conductor Phone GPS (Zero Hardware)</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p><strong>BusSaathi MSRTC Passenger System</strong> • Powered by Leaflet & OSRM Open Road Networks</p>
+  </footer>
+
+  <!-- Leaflet Map JS Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+  <!-- Passenger Application Logic -->
+  <script type="module" src="passenger.js"></script>
+</body>
+</html>

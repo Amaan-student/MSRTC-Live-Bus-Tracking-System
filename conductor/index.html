@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1E3320">
+  <title>MSRTC Conductor Cockpit - BusSaathi</title>
+
+  <!-- Typography & Styling -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="conductor.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="app-header" style="background: var(--msrtc-dark); border-bottom-color: var(--msrtc-amber);">
+    <div class="header-inner">
+      <a href="../index.html" class="brand-group">
+        <div class="brand-emblem" style="background: var(--msrtc-amber); color: var(--msrtc-dark);">ST</div>
+        <div class="brand-titles">
+          <h1>BusSaathi • Conductor Portal</h1>
+          <span>Smart GPS Telemetry & Revenue System</span>
+        </div>
+      </a>
+      <div class="header-nav">
+        <a href="../index.html" class="header-btn">🏠 Home</a>
+        <a href="../passenger/index.html" class="header-btn">👥 Passenger</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="narrow-container">
+
+    <!-- ================================================================= -->
+    <!-- SECTION 1: CONDUCTOR LOGIN                                        -->
+    <!-- ================================================================= -->
+    <div id="conductor-login-section" class="card card-highlight">
+      <div class="card-header">
+        <h3 class="card-title">
+          <span>🎫</span> Conductor Authentication
+        </h3>
+        <span class="badge badge-idle">MSRTC Crew</span>
+      </div>
+
+      <p style="font-size: 14px; color: var(--msrtc-muted); margin-bottom: 16px;">
+        Sign in to access your assigned MSRTC bus, broadcast live smartphone GPS to passengers, report breakdowns, and submit end-of-day fare revenue.
+      </p>
+
+      <form id="conductor-login-form">
+        <div class="form-group">
+          <label for="conductor-email" class="form-label">Conductor Official Email / ID:</label>
+          <input 
+            type="email" 
+            id="conductor-email" 
+            class="form-control" 
+            placeholder="e.g. conductor1@msrtc.in" 
+            required
+            value="conductor1@msrtc.in"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="conductor-password" class="form-label">Password:</label>
+          <input 
+            type="password" 
+            id="conductor-password" 
+            class="form-control" 
+            placeholder="Enter password" 
+            required
+            value="msrtc123"
+          >
+        </div>
+
+        <button type="submit" id="conductor-login-btn" class="btn btn-primary btn-full btn-lg">
+          Sign In to Conductor Cockpit
+        </button>
+      </form>
+
+      <!-- Quick Demo Login Switcher for Avishkar Viva -->
+      <div style="margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--msrtc-line);">
+        <label for="quick-profile-select" class="form-label" style="color: var(--msrtc-dark);">
+          ⚡ Quick Demo Login (One-click for Competition Judges):
+        </label>
+        <select id="quick-profile-select" class="form-control">
+          <option value="COND_101">Ramesh Jadhav — Bus MH 20 BL 4040 (Pune ➔ Chh. Sambhajinagar)</option>
+          <option value="COND_102">Suresh Chavan — Bus MH 12 RN 8812 (Pune ➔ Mumbai Dadar)</option>
+          <option value="COND_103">Prakash Shinde — Bus MH 14 BT 1947 (Pune ➔ Satara)</option>
+          <option value="COND_104">Ganesh Kulkarni — Bus MH 15 AK 3301 (Nashik ➔ Pune)</option>
+        </select>
+        <button id="quick-login-btn" class="btn btn-accent btn-sm btn-full" style="margin-top: 8px;" type="button">
+          Log In with Selected Conductor Profile
+        </button>
+      </div>
+
+      <div id="login-feedback" style="margin-top: 12px; font-size: 13px; font-weight: 600;"></div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- SECTION 2: ACTIVE CONDUCTOR COCKPIT (AFTER LOGIN)                 -->
+    <!-- ================================================================= -->
+    <div id="conductor-cockpit-section" style="display: none;">
+
+      <!-- Top Crew Profile Bar -->
+      <div class="card" style="padding: 12px 18px; margin-bottom: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <span style="font-size: 12px; color: var(--msrtc-muted); text-transform: uppercase; font-weight: 700;">
+              Logged In Conductor
+            </span>
+            <h3 id="crew-name" style="font-size: 18px; font-weight: 800; color: var(--msrtc-dark); line-height: 1.1;">
+              Ramesh Jadhav
+            </h3>
+            <span id="crew-badge" style="font-size: 12px; color: var(--msrtc-muted);">
+              Badge: MSRTC-C-45812 • Shivajinagar Depot
+            </span>
+          </div>
+          <button id="conductor-logout-btn" class="btn btn-outline btn-sm" type="button">
+            🚪 Sign Out
+          </button>
+        </div>
+      </div>
+
+      <!-- Assigned Bus Details Card -->
+      <div class="cockpit-hero">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+          <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85;">
+            Your Assigned Vehicle
+          </span>
+          <span id="cockpit-bus-type" class="badge type-shivshahi">Shivshahi</span>
+        </div>
+        <div id="cockpit-bus-number" class="cockpit-bus-title">MH 20 BL 4040</div>
+        
+        <div style="font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; margin: 4px 0 10px;">
+          <span id="cockpit-from">Pune</span>
+          <span>➔</span>
+          <span id="cockpit-to">Chhatrapati Sambhajinagar</span>
+        </div>
+
+        <div style="display: flex; gap: 14px; font-size: 13px; opacity: 0.9;">
+          <span>⏰ Departure: <strong id="cockpit-dep">07:30 AM</strong></span>
+          <span>⏱️ Duration: <strong id="cockpit-dur">5h 15m</strong></span>
+        </div>
+      </div>
+
+      <!-- MASTER TRIP START/END GPS TRANSMITTER BUTTON -->
+      <div style="margin-bottom: 18px;">
+        <button id="trip-toggle-btn" class="btn-trip-toggle start-state" type="button">
+          <span id="trip-btn-label">🟢 START TRIP & BROADCAST GPS</span>
+          <small id="trip-btn-hint">Click to start sharing live location with passengers</small>
+        </button>
+      </div>
+
+      <!-- LIVE GPS TELEMETRY STATUS HUD -->
+      <div id="telemetry-panel" class="card card-green" style="display: none;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <span class="badge badge-live">Live GPS Telemetry Active</span>
+          <span id="wakelock-badge" class="badge" style="background: #E8F8F5; color: #117A65;">
+            💡 Screen Awake: ON
+          </span>
+        </div>
+
+        <p style="font-size: 13px; color: var(--msrtc-muted); margin-bottom: 10px;">
+          Your smartphone is now transmitting coordinates to the Firebase Realtime Database every <strong>15–20 seconds</strong>. Keep this browser tab open while driving.
+        </p>
+
+        <div class="telemetry-grid">
+          <div class="telemetry-box">
+            <div class="telemetry-label">Updates Sent</div>
+            <div id="telemetry-count" class="telemetry-value">0</div>
+          </div>
+          <div class="telemetry-box">
+            <div class="telemetry-label">Last Transmission</div>
+            <div id="telemetry-time" class="telemetry-value">--</div>
+          </div>
+          <div class="telemetry-box">
+            <div class="telemetry-label">GPS Accuracy</div>
+            <div id="telemetry-acc" class="telemetry-value">-- m</div>
+          </div>
+          <div class="telemetry-box">
+            <div class="telemetry-label">Current Speed</div>
+            <div id="telemetry-speed" class="telemetry-value">0 km/h</div>
+          </div>
+        </div>
+
+        <!-- Coordinates readout for viva verification -->
+        <div style="margin-top: 10px; font-size: 12px; color: var(--msrtc-muted); text-align: center;">
+          Lat: <span id="telemetry-lat">--</span> • Lon: <span id="telemetry-lon">--</span>
+        </div>
+      </div>
+
+      <!-- ISSUE / BREAKDOWN REPORTING FORM -->
+      <div class="conductor-action-card">
+        <div class="card-header">
+          <h4 class="card-title">
+            <span>🚨</span> Report Breakdown / On-Road Issue
+          </h4>
+          <span class="badge badge-open">Alerts Depot</span>
+        </div>
+
+        <p style="font-size: 13px; color: var(--msrtc-muted); margin-bottom: 12px;">
+          Immediately alert the Central Control Room in case of puncture, engine fault, or road delays.
+        </p>
+
+        <form id="issue-report-form">
+          <div class="form-group">
+            <label class="form-label">Bus Registration Number:</label>
+            <input type="text" id="report-bus-number" class="form-control" readonly style="background: #F2F4F4; font-weight: 700;">
+          </div>
+
+          <div class="form-group">
+            <label for="issue-category" class="form-label">Issue Category:</label>
+            <select id="issue-category" class="form-control" required>
+              <option value="Engine / Mechanical Failure">Engine / Mechanical Overheating</option>
+              <option value="Tyre Puncture / Suspension">Tyre Puncture / Wheel Assembly</option>
+              <option value="AC / Electrical System">AC Cooling / Electrical Failure</option>
+              <option value="Highway Jam / Road Accident">Ghat Blockade / Heavy Traffic Jam</option>
+              <option value="Medical Emergency / Passenger Support">Medical Emergency / Passenger Support</option>
+              <option value="Other Technical Issue">Other Technical Issue</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="issue-details" class="form-label">Detailed Description & Landmark:</label>
+            <textarea 
+              id="issue-details" 
+              class="form-control" 
+              placeholder="e.g. Engine temperature gauge high near Ahmednagar bypass. Stopped at roadside hotel..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" id="submit-issue-btn" class="btn btn-outline btn-full">
+            ⚠️ Transmit Issue Report to Control Room
+          </button>
+        </form>
+        <div id="issue-feedback" style="margin-top: 10px; font-size: 13px; font-weight: 600;"></div>
+      </div>
+
+      <!-- END OF DAY REVENUE COLLECTION FORM -->
+      <div class="conductor-action-card">
+        <div class="card-header">
+          <h4 class="card-title">
+            <span>💰</span> End of Day Revenue Submission
+          </h4>
+          <span class="badge badge-resolved">Digital ETM</span>
+        </div>
+
+        <p style="font-size: 13px; color: var(--msrtc-muted); margin-bottom: 12px;">
+          Eliminate paper waybills by submitting your Electronic Ticket Machine (ETM) ticket counts and total fare collection directly to the financial database.
+        </p>
+
+        <form id="revenue-form">
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="revenue-date" class="form-label">Trip Date:</label>
+              <input type="date" id="revenue-date" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="revenue-tickets" class="form-label">Total Tickets Issued:</label>
+              <input type="number" id="revenue-tickets" class="form-control" placeholder="e.g. 42" min="1" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="revenue-amount" class="form-label">Total Fare Collected (₹ INR):</label>
+            <input type="number" id="revenue-amount" class="form-control" placeholder="e.g. 14700" min="1" required>
+          </div>
+
+          <button type="submit" id="submit-revenue-btn" class="btn btn-green btn-full">
+            💾 Submit Daily Revenue to Depot Accounts
+          </button>
+        </form>
+        <div id="revenue-feedback" style="margin-top: 10px; font-size: 13px; font-weight: 600;"></div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p><strong>BusSaathi Conductor Mobile Cockpit</strong> • MSRTC Avishkar Research Prototype</p>
+  </footer>
+
+  <!-- Conductor Application Logic -->
+  <script type="module" src="conductor.js"></script>
+</body>
+</html>

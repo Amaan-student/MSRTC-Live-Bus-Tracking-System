@@ -1,0 +1,603 @@
+/**
+ * BusSaathi - MSRTC Smart Transport Management System
+ * File: /shared/styles.css
+ * 
+ * Core Design System:
+ * - Brand Colors:
+ *   --msrtc-red: #C0392B (Maharashtra State Transport Signature Red)
+ *   --msrtc-amber: #E8A33D (Warm Mustard Accent)
+ *   --msrtc-green: #2C5F2D (Forest Green for Active Fleet / Eco Buses)
+ *   --msrtc-dark: #1E3320 (Deep Evergreen Depot tone)
+ *   --msrtc-ink: #1C241E (High-contrast typography)
+ * - Mobile-first, sunlight-readable high contrast, responsive cards
+ */
+
+:root {
+  --msrtc-red: #C0392B;
+  --msrtc-red-dark: #962D22;
+  --msrtc-red-light: #FADBD8;
+  --msrtc-amber: #E8A33D;
+  --msrtc-amber-light: #FCF3CF;
+  --msrtc-green: #2C5F2D;
+  --msrtc-green-light: #D4EFDF;
+  --msrtc-dark: #1E3320;
+  --msrtc-ink: #1C241E;
+  --msrtc-muted: #5D6D7E;
+  --msrtc-bg: #F4F6F4;
+  --msrtc-card: #FFFFFF;
+  --msrtc-line: #D5DBDB;
+  --msrtc-shadow: 0 4px 14px rgba(28, 36, 30, 0.08);
+  --msrtc-radius: 12px;
+  --msrtc-font: 'Mukta', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--msrtc-font);
+  background-color: var(--msrtc-bg);
+  color: var(--msrtc-ink);
+  line-height: 1.5;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header & Navigation */
+.app-header {
+  background: var(--msrtc-red);
+  color: #ffffff;
+  border-bottom: 4px solid var(--msrtc-amber);
+  padding: 12px 18px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-emblem {
+  width: 38px;
+  height: 38px;
+  background: var(--msrtc-amber);
+  color: var(--msrtc-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 19px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.brand-titles h1 {
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.2px;
+}
+
+.brand-titles span {
+  font-size: 13px;
+  opacity: 0.92;
+  font-weight: 400;
+  display: block;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+  color: #ffffff;
+}
+
+.header-btn.active {
+  background: var(--msrtc-amber);
+  color: var(--msrtc-dark);
+  border-color: var(--msrtc-amber);
+}
+
+/* Main Container */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.narrow-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Cards & Panels */
+.card {
+  background: var(--msrtc-card);
+  border: 1px solid var(--msrtc-line);
+  border-radius: var(--msrtc-radius);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--msrtc-shadow);
+}
+
+.card-highlight {
+  border-left: 6px solid var(--msrtc-red);
+}
+
+.card-green {
+  border-left: 6px solid var(--msrtc-green);
+}
+
+.card-amber {
+  border-left: 6px solid var(--msrtc-amber);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--msrtc-line);
+  padding-bottom: 10px;
+}
+
+.card-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--msrtc-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  line-height: 1.2;
+}
+
+.btn-primary {
+  background: var(--msrtc-red);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: var(--msrtc-red-dark);
+}
+
+.btn-accent {
+  background: var(--msrtc-amber);
+  color: var(--msrtc-dark);
+}
+
+.btn-accent:hover {
+  filter: brightness(0.95);
+}
+
+.btn-green {
+  background: var(--msrtc-green);
+  color: #ffffff;
+}
+
+.btn-green:hover {
+  filter: brightness(1.1);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--msrtc-red);
+  border: 2px solid var(--msrtc-red);
+}
+
+.btn-outline:hover {
+  background: var(--msrtc-red-light);
+}
+
+.btn-dark {
+  background: var(--msrtc-dark);
+  color: #ffffff;
+}
+
+.btn-dark:hover {
+  background: #000000;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn-lg {
+  padding: 14px 24px;
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+.btn-sm {
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+/* Forms & Inputs */
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--msrtc-muted);
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1px solid var(--msrtc-line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--msrtc-ink);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--msrtc-red);
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.15);
+}
+
+select.form-control {
+  cursor: pointer;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 85px;
+}
+
+/* Badges & Tags */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.badge-live {
+  background: var(--msrtc-green-light);
+  color: var(--msrtc-green);
+  border: 1px solid #A9DFBF;
+}
+
+.badge-live::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--msrtc-green);
+  border-radius: 50%;
+  animation: pulse-dot 1.5s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.8); opacity: 0.8; }
+}
+
+.badge-idle {
+  background: #EAECEE;
+  color: #5D6D7E;
+}
+
+.badge-maintenance {
+  background: #FADBD8;
+  color: #C0392B;
+}
+
+.badge-resolved {
+  background: #D4EFDF;
+  color: #1E8449;
+}
+
+.badge-open {
+  background: #FCE4D6;
+  color: #C0392B;
+}
+
+/* Bus Types Tags */
+.type-lal-pari {
+  background: #C0392B;
+  color: #ffffff;
+}
+
+.type-shivshahi {
+  background: #8E44AD;
+  color: #ffffff;
+}
+
+.type-shivneri {
+  background: #2980B9;
+  color: #ffffff;
+}
+
+.type-eshivai {
+  background: #27AE60;
+  color: #ffffff;
+}
+
+/* Alert Banners */
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.alert-info {
+  background: #EBF5FB;
+  border: 1px solid #AED6F1;
+  color: #1B4F72;
+}
+
+.alert-warning {
+  background: var(--msrtc-amber-light);
+  border: 1px solid #F9E79F;
+  color: #7D6608;
+}
+
+.alert-success {
+  background: var(--msrtc-green-light);
+  border: 1px solid #A9DFBF;
+  color: var(--msrtc-green);
+}
+
+.alert-danger {
+  background: var(--msrtc-red-light);
+  border: 1px solid #F5B7B1;
+  color: var(--msrtc-red-dark);
+}
+
+/* Tables */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.table th {
+  background: #F8F9F9;
+  padding: 10px 12px;
+  font-weight: 700;
+  color: var(--msrtc-dark);
+  border-bottom: 2px solid var(--msrtc-line);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--msrtc-line);
+  vertical-align: middle;
+}
+
+.table tr:hover td {
+  background: #F9FAFB;
+}
+
+/* Grid Layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* KPI Counter Card */
+.kpi-card {
+  background: var(--msrtc-card);
+  border: 1px solid var(--msrtc-line);
+  border-radius: var(--msrtc-radius);
+  padding: 16px;
+  box-shadow: var(--msrtc-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-value {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-top: 4px;
+  color: var(--msrtc-dark);
+}
+
+.kpi-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--msrtc-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Map Styling */
+#map {
+  width: 100%;
+  height: 58vh;
+  min-height: 380px;
+  border-radius: var(--msrtc-radius);
+  border: 1px solid var(--msrtc-line);
+  box-shadow: var(--msrtc-shadow);
+  z-index: 10;
+}
+
+/* Avishkar Banner */
+.research-badge {
+  background: linear-gradient(135deg, #1E3320, #2C5F2D);
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Modal Popup */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 16px;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  overflow: hidden;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  background: var(--msrtc-red);
+  color: #ffffff;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 18px 20px;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  padding: 12px 20px;
+  background: #F8F9F9;
+  border-top: 1px solid var(--msrtc-line);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Footer */
+.app-footer {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--msrtc-muted);
+  font-size: 13px;
+  border-top: 1px solid var(--msrtc-line);
+  margin-top: 40px;
+}

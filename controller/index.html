@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#C0392B">
+  <title>MSRTC Controller Command Room - BusSaathi</title>
+
+  <!-- Typography & Styling -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="controller.css">
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="../index.html" class="brand-group">
+        <div class="brand-emblem">ST</div>
+        <div class="brand-titles">
+          <h1>BusSaathi • Controller Command</h1>
+          <span>Depot Traffic Control & Central Operations</span>
+        </div>
+      </a>
+      <div class="header-nav">
+        <a href="../index.html" class="header-btn">🏠 Home</a>
+        <a href="../passenger/index.html" class="header-btn">👥 Passenger</a>
+        <a href="../conductor/index.html" class="header-btn">🎫 Conductor</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ================================================================= -->
+    <!-- SECTION 1: CONTROLLER AUTHENTICATION                              -->
+    <!-- ================================================================= -->
+    <div id="controller-login-section" class="narrow-container">
+      <div class="card card-highlight">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span>🛡️</span> Controller Admin Authentication
+          </h3>
+          <span class="badge badge-idle">Role: Depot Traffic Manager</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--msrtc-muted); margin-bottom: 16px;">
+          Central Control Room access for Maharashtra State Transport depot managers and traffic controllers.
+        </p>
+
+        <form id="controller-login-form">
+          <div class="form-group">
+            <label for="controller-email" class="form-label">Controller Official Email:</label>
+            <input 
+              type="email" 
+              id="controller-email" 
+              class="form-control" 
+              placeholder="e.g. controller@msrtc.in" 
+              required
+              value="controller@msrtc.in"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="controller-password" class="form-label">Password:</label>
+            <input 
+              type="password" 
+              id="controller-password" 
+              class="form-control" 
+              placeholder="Enter password" 
+              required
+              value="msrtc123"
+            >
+          </div>
+
+          <button type="submit" id="controller-login-btn" class="btn btn-primary btn-full btn-lg">
+            Sign In to Command Dashboard
+          </button>
+        </form>
+
+        <div style="margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--msrtc-line);">
+          <button id="quick-controller-login-btn" class="btn btn-accent btn-sm btn-full" type="button">
+            ⚡ Quick Demo Sign In as Depot Manager (S. K. Patil)
+          </button>
+        </div>
+
+        <div id="controller-login-feedback" style="margin-top: 10px; font-size: 13px; font-weight: 600;"></div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- SECTION 2: CONTROLLER DASHBOARD (AFTER LOGIN)                     -->
+    <!-- ================================================================= -->
+    <div id="controller-dashboard-section" style="display: none;">
+
+      <!-- Controller Profile Header -->
+      <div class="card" style="padding: 12px 18px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span style="font-size: 12px; color: var(--msrtc-muted); text-transform: uppercase; font-weight: 700;">
+              Active Duty Controller
+            </span>
+            <h2 id="controller-user-name" style="font-size: 20px; font-weight: 800; color: var(--msrtc-dark); line-height: 1.1;">
+              S. K. Patil (Depot Traffic Controller)
+            </h2>
+            <span id="controller-depot-name" style="font-size: 13px; color: var(--msrtc-muted);">
+              Shivajinagar Central Depot, Pune • Command Room #04
+            </span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="badge badge-live">Live WebSocket Sync</span>
+            <button id="controller-logout-btn" class="btn btn-outline btn-sm" type="button">
+              🚪 Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live KPI Stat Cards (Powered by Firebase onValue WebSockets) -->
+      <div class="grid-4" style="margin-bottom: 20px;">
+        
+        <div class="kpi-card" style="border-left: 5px solid var(--msrtc-dark);">
+          <span class="kpi-label">Total Fleet Registered</span>
+          <div id="kpi-total-buses" class="kpi-value">--</div>
+        </div>
+
+        <div class="kpi-card" style="border-left: 5px solid var(--msrtc-green);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="kpi-label">Currently Running</span>
+            <span class="badge badge-live">Live</span>
+          </div>
+          <div id="kpi-running-buses" class="kpi-value" style="color: var(--msrtc-green);">--</div>
+        </div>
+
+        <div class="kpi-card" style="border-left: 5px solid #7F8C8D;">
+          <span class="kpi-label">Idle at Depot / Stand</span>
+          <div id="kpi-idle-buses" class="kpi-value" style="color: #5D6D7E;">--</div>
+        </div>
+
+        <div class="kpi-card" style="border-left: 5px solid var(--msrtc-red);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="kpi-label">Under Maintenance</span>
+            <span class="badge badge-maintenance">Alert</span>
+          </div>
+          <div id="kpi-maintenance-buses" class="kpi-value" style="color: var(--msrtc-red);">--</div>
+        </div>
+
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="controller-tabs">
+        <button id="tab-btn-fleet" class="controller-tab-btn active" type="button">
+          📊 Fleet Status Table <span id="badge-tab-fleet" class="tab-counter-badge">0</span>
+        </button>
+        <button id="tab-btn-addbus" class="controller-tab-btn" type="button">
+          ➕ Add New Bus
+        </button>
+        <button id="tab-btn-reports" class="controller-tab-btn" type="button">
+          🚨 Breakdown Reports <span id="badge-tab-reports" class="tab-counter-badge">0</span>
+        </button>
+        <button id="tab-btn-revenue" class="controller-tab-btn" type="button">
+          💰 Revenue & Financials
+        </button>
+        <button id="tab-btn-tools" class="controller-tab-btn" type="button">
+          ⚙️ Database Utilities
+        </button>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 1: FLEET OVERVIEW TABLE                                     -->
+      <!-- =============================================================== -->
+      <div id="panel-fleet" class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span>🚌</span> Live MSRTC Fleet Tracking Table
+          </h3>
+          <input 
+            type="text" 
+            id="fleet-search-input" 
+            class="form-control" 
+            placeholder="Filter by bus number or route..."
+            style="max-width: 280px; padding: 6px 12px; font-size: 13px;"
+          >
+        </div>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Bus Registration</th>
+                <th>Bus Type</th>
+                <th>Route (From ➔ To)</th>
+                <th>Scheduled</th>
+                <th>Assigned Conductor</th>
+                <th>Live Status</th>
+                <th>Last GPS Coordinates</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="fleet-table-body">
+              <tr>
+                <td colspan="8" style="text-align: center; color: var(--msrtc-muted); padding: 20px;">
+                  Connecting to live fleet data...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 2: ADD NEW BUS FORM                                         -->
+      <!-- =============================================================== -->
+      <div id="panel-addbus" class="card" style="display: none; max-width: 760px; margin: 0 auto;">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span>➕</span> Register New MSRTC Bus to Fleet
+          </h3>
+          <span class="badge badge-live">Writes to Firebase</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--msrtc-muted); margin-bottom: 16px;">
+          Register a new vehicle into the central MSRTC database. Once added, passengers can track it and assigned conductors can start trips immediately.
+        </p>
+
+        <form id="add-bus-form">
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="new-bus-number" class="form-label">Bus Registration Number:</label>
+              <input 
+                type="text" 
+                id="new-bus-number" 
+                class="form-control" 
+                placeholder="e.g. MH 12 AB 5522" 
+                required
+                autocapitalize="characters"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="new-bus-type" class="form-label">Bus Service Category:</label>
+              <select id="new-bus-type" class="form-control" required>
+                <option value="Lal Pari">Lal Pari (Ordinary / Parivartan)</option>
+                <option value="Shivshahi" selected>Shivshahi (AC Seater)</option>
+                <option value="Shivneri">Shivneri (Volvo/Scania Express)</option>
+                <option value="e-Shivai">e-Shivai (Electric Zero-Emission)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="new-bus-from" class="form-label">Origin Stand (From):</label>
+              <select id="new-bus-from" class="form-control" required></select>
+            </div>
+
+            <div class="form-group">
+              <label for="new-bus-to" class="form-label">Destination Stand (To):</label>
+              <select id="new-bus-to" class="form-control" required></select>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="new-bus-departure" class="form-label">Scheduled Departure Time:</label>
+              <input type="text" id="new-bus-departure" class="form-control" placeholder="e.g. 09:30 AM" required>
+            </div>
+
+            <div class="form-group">
+              <label for="new-bus-duration" class="form-label">Estimated Duration:</label>
+              <input type="text" id="new-bus-duration" class="form-control" placeholder="e.g. 4h 15m" required>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="new-bus-conductor" class="form-label">Assign Duty Conductor:</label>
+              <select id="new-bus-conductor" class="form-control" required></select>
+            </div>
+
+            <div class="form-group">
+              <label for="new-bus-status" class="form-label">Initial Fleet Status:</label>
+              <select id="new-bus-status" class="form-control" required>
+                <option value="idle" selected>Idle at Depot</option>
+                <option value="running">Running on Route</option>
+                <option value="maintenance">Under Maintenance</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" id="save-bus-btn" class="btn btn-primary btn-full btn-lg" style="margin-top: 10px;">
+            🚌 Register Vehicle into Central Database
+          </button>
+        </form>
+
+        <div id="add-bus-feedback" style="margin-top: 12px; font-size: 14px; font-weight: 600;"></div>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 3: BREAKDOWN REPORTS                                        -->
+      <!-- =============================================================== -->
+      <div id="panel-reports" class="card" style="display: none;">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span>🚨</span> On-Road Breakdown & Maintenance Alerts
+          </h3>
+          <span id="open-reports-count-pill" class="badge badge-open">0 Open Alerts</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--msrtc-muted); margin-bottom: 14px;">
+          Incidents transmitted in real time by conductors from their smartphones. Mark incidents as resolved once the mobile workshop or replacement bus assists the crew.
+        </p>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Report ID</th>
+                <th>Bus Registration</th>
+                <th>Reported By</th>
+                <th>Issue Description</th>
+                <th>Reported Time</th>
+                <th>Status</th>
+                <th>Depot Action</th>
+              </tr>
+            </thead>
+            <tbody id="reports-table-body">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--msrtc-muted); padding: 20px;">
+                  No active breakdown reports.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 4: REVENUE & FINANCIAL AUDIT LEDGER                         -->
+      <!-- =============================================================== -->
+      <div id="panel-revenue" class="card" style="display: none;">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span>💰</span> Digital ETM Revenue Audit Ledger
+          </h3>
+          <span class="badge badge-resolved">Live Digital Accounts</span>
+        </div>
+
+        <!-- Revenue Summary Counters -->
+        <div class="grid-3" style="margin-bottom: 18px;">
+          <div class="kpi-card" style="border-left: 5px solid var(--msrtc-green);">
+            <span class="kpi-label">Total Fare Revenue</span>
+            <div id="revenue-grand-total" class="kpi-value" style="color: var(--msrtc-green);">₹ 0</div>
+          </div>
+          <div class="kpi-card" style="border-left: 5px solid var(--msrtc-amber);">
+            <span class="kpi-label">Total Passenger Tickets Issued</span>
+            <div id="revenue-total-tickets" class="kpi-value">0</div>
+          </div>
+          <div class="kpi-card" style="border-left: 5px solid var(--msrtc-dark);">
+            <span class="kpi-label">Total Trip Entries</span>
+            <div id="revenue-total-entries" class="kpi-value">0</div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Revenue ID</th>
+                <th>Trip Date</th>
+                <th>Bus Number</th>
+                <th>Conductor</th>
+                <th>Tickets Sold</th>
+                <th>Collection (₹ INR)</th>
+                <th>Submitted Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="revenue-table-body">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--msrtc-muted); padding: 20px;">
+                  Loading revenue entries...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- =============================================================== -->
+      <!-- TAB 5: DATABASE UTILITIES                                       -->
+      <!-- =============================================================== -->
+      <div id="panel-tools" class="card" style="display: none;">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span>⚙️</span> Database & Rehearsal Utilities
+          </h3>
+          <span class="badge badge-idle">Avishkar Admin</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--msrtc-muted); margin-bottom: 16px;">
+          Use these utilities to populate fresh sample data before your Avishkar competition presentation, or reset the state if needed.
+        </p>
+
+        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          <button id="ctrl-seed-btn" class="btn btn-primary">
+            🌱 Seed Authentic MSRTC Routes & Fleet
+          </button>
+          <button id="ctrl-reset-btn" class="btn btn-outline">
+            🔄 Reset Demo Rehearsal Cache
+          </button>
+        </div>
+        <div id="tools-feedback" style="margin-top: 14px; font-size: 14px; font-weight: 600;"></div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p><strong>BusSaathi Controller Command</strong> • MSRTC Fleet Management • Avishkar 2026</p>
+  </footer>
+
+  <!-- Controller Application Logic -->
+  <script type="module" src="controller.js"></script>
+</body>
+</html>

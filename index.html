@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#C0392B">
+  <title>BusSaathi - MSRTC Smart Transport Management System</title>
+  
+  <!-- Typography & Styling -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared/styles.css">
+  
+  <style>
+    .hero-section {
+      background: linear-gradient(135deg, #C0392B 0%, #962D22 60%, #1E3320 100%);
+      color: #ffffff;
+      padding: 36px 20px 42px;
+      border-radius: var(--msrtc-radius);
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-section::after {
+      content: "ST";
+      position: absolute;
+      right: -20px;
+      bottom: -35px;
+      font-size: 170px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
+    .role-card {
+      background: #ffffff;
+      border: 1px solid var(--msrtc-line);
+      border-radius: var(--msrtc-radius);
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      box-shadow: var(--msrtc-shadow);
+      position: relative;
+    }
+    .role-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      border-color: var(--msrtc-amber);
+    }
+    .role-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 14px;
+    }
+    .problem-pill {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hardware-saving-box {
+      background: #E8F8F5;
+      border: 2px dashed #1ABC9C;
+      border-radius: var(--msrtc-radius);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-group">
+        <div class="brand-emblem">ST</div>
+        <div class="brand-titles">
+          <h1>BusSaathi (बस साथी)</h1>
+          <span>Maharashtra State Road Transport Corporation (MSRTC)</span>
+        </div>
+      </a>
+      <div class="header-nav">
+        <span class="research-badge">Avishkar 2026 Prototype</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero Project Overview Banner -->
+    <section class="hero-section">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+        <span class="research-badge" style="background: var(--msrtc-amber); color: var(--msrtc-dark);">
+          State Level Research Project
+        </span>
+        <span class="problem-pill">MSRTC Digital Transformation</span>
+      </div>
+      <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 8px;">
+        Smart Public Transit & Fleet Management Platform
+      </h2>
+      <p style="font-size: 16px; max-width: 820px; opacity: 0.94; margin-bottom: 18px;">
+        BusSaathi solves three critical bottlenecks in Maharashtra State Transport: the lack of live bus tracking for rural and intercity passengers, overcrowding at bus stand inquiry counters, and manual, paper-based breakdown and revenue reporting.
+      </p>
+      
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <span class="problem-pill">📍 Real-time Passenger GPS Tracking</span>
+        <span class="problem-pill">📱 Conductor Smartphone-based Telemetry</span>
+        <span class="problem-pill">🖥️ Depot Controller Command Room</span>
+      </div>
+    </section>
+
+    <!-- Core Research Innovation Banner -->
+    <div class="hardware-saving-box">
+      <div>
+        <h4 style="color: #0E6251; font-size: 17px; font-weight: 800; margin-bottom: 4px;">
+          💡 Core Research Innovation: Zero-Cost Hardware Architecture
+        </h4>
+        <p style="color: #117A65; font-size: 14px; max-width: 780px;">
+          Traditional AIS-140 GPS hardware costs <strong>₹25,000 per bus</strong> plus ₹6,000/year annual maintenance. Across MSRTC's 15,000+ fleet, this requires <strong>₹37.5+ Crores</strong> in capital expenditure. 
+          BusSaathi leverages the <strong>conductor's existing Android smartphone</strong> via browser Geolocation API and WebSockets — saving over 90% in deployment costs!
+        </p>
+      </div>
+      <a href="AVISHKAR_RESEARCH_DEFENSE.md" target="_blank" class="btn btn-green" style="white-space: nowrap;">
+        📖 Read Research Paper
+      </a>
+    </div>
+
+    <!-- 3 Core Role Portals -->
+    <h3 style="font-size: 20px; font-weight: 800; color: var(--msrtc-dark); margin-bottom: 14px;">
+      Select User Role to Experience the Prototype:
+    </h3>
+
+    <div class="grid-3" style="margin-bottom: 28px;">
+      
+      <!-- 1. Passenger Portal -->
+      <a href="passenger/index.html" class="role-card" style="border-top: 5px solid var(--msrtc-red);">
+        <div>
+          <div class="role-icon" style="background: #FDEDEC; color: var(--msrtc-red);">
+            👥
+          </div>
+          <span class="badge" style="background: #FDEDEC; color: var(--msrtc-red); margin-bottom: 8px;">
+            Public Access • No Login
+          </span>
+          <h4 style="font-size: 20px; font-weight: 800; margin-bottom: 8px; color: var(--msrtc-red);">
+            1. Passenger Portal
+          </h4>
+          <p style="color: var(--msrtc-muted); font-size: 14px; margin-bottom: 16px;">
+            Search any MSRTC bus by number (e.g. MH 20 BL 4040) or select From/To cities. View schedules, live arrival ETA, and watch the bus move along the highway using Leaflet & OSRM road geometry.
+          </p>
+        </div>
+        <div class="btn btn-primary btn-full">
+          Launch Passenger App →
+        </div>
+      </a>
+
+      <!-- 2. Conductor Portal -->
+      <a href="conductor/index.html" class="role-card" style="border-top: 5px solid var(--msrtc-amber);">
+        <div>
+          <div class="role-icon" style="background: var(--msrtc-amber-light); color: #B7950B;">
+            🎫
+          </div>
+          <span class="badge" style="background: var(--msrtc-amber-light); color: #B7950B; margin-bottom: 8px;">
+            Staff Login Required
+          </span>
+          <h4 style="font-size: 20px; font-weight: 800; margin-bottom: 8px; color: #9A7D0A;">
+            2. Conductor Portal
+          </h4>
+          <p style="color: var(--msrtc-muted); font-size: 14px; margin-bottom: 16px;">
+            Conductor logs in on their phone. Tapping "Start Trip" activates GPS telemetry sending location every 15-20 seconds to Firebase, reports breakdowns, and logs end-of-day electronic ticket revenue.
+          </p>
+        </div>
+        <div class="btn btn-accent btn-full">
+          Launch Conductor Cockpit →
+        </div>
+      </a>
+
+      <!-- 3. Controller Dashboard -->
+      <a href="controller/index.html" class="role-card" style="border-top: 5px solid var(--msrtc-green);">
+        <div>
+          <div class="role-icon" style="background: var(--msrtc-green-light); color: var(--msrtc-green);">
+            🖥️
+          </div>
+          <span class="badge" style="background: var(--msrtc-green-light); color: var(--msrtc-green); margin-bottom: 8px;">
+            Admin Authority
+          </span>
+          <h4 style="font-size: 20px; font-weight: 800; margin-bottom: 8px; color: var(--msrtc-green);">
+            3. Controller Command
+          </h4>
+          <p style="color: var(--msrtc-muted); font-size: 14px; margin-bottom: 16px;">
+            Depot manager overview: live counters for running, idle, and maintenance buses. Manage fleet registration, resolve on-road breakdown alerts, and track daily revenue collection across all routes.
+          </p>
+        </div>
+        <div class="btn btn-green btn-full">
+          Open Command Dashboard →
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Backend Diagnostics & Quick Tools -->
+    <div class="card card-highlight">
+      <div class="card-header">
+        <h4 class="card-title">
+          <span>⚙️</span> Backend Configuration & Demonstration Status
+        </h4>
+        <span id="backend-status-pill" class="badge badge-idle">Checking connection...</span>
+      </div>
+      
+      <p style="font-size: 14px; color: var(--msrtc-muted); margin-bottom: 14px;">
+        BusSaathi is built to connect seamlessly with <strong>Firebase Realtime Database</strong> and <strong>Firebase Authentication</strong>. When placeholder keys are detected, the system runs safely in offline rehearsal mode with interactive mock data so you can practice your Avishkar viva presentation anytime.
+      </p>
+
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <button id="seed-db-btn" class="btn btn-outline btn-sm">
+          🌱 Seed Authentic MSRTC Data
+        </button>
+        <button id="reset-db-btn" class="btn btn-dark btn-sm">
+          🔄 Reset Default Rehearsal Data
+        </button>
+        <a href="shared/firebase-config.js" target="_blank" class="btn btn-outline btn-sm">
+          🔑 View/Edit Firebase Config
+        </a>
+      </div>
+      <div id="status-message" style="margin-top: 10px; font-size: 13px; font-weight: 600;"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p><strong>BusSaathi</strong> • Designed & Developed for the Avishkar Research Convention</p>
+    <p>Department of Computer Applications (BCA) • Maharashtra State Road Transport Corporation Prototype</p>
+  </footer>
+
+  <!-- Script for status detection & quick seed actions -->
+  <script type="module">
+    import { isConfigured, seedInitialDatabase } from "./shared/firebase-config.js";
+
+    const statusPill = document.getElementById("backend-status-pill");
+    const statusMsg = document.getElementById("status-message");
+
+    if (isConfigured()) {
+      statusPill.className = "badge badge-live";
+      statusPill.textContent = "Live Firebase RTDB Connected";
+    } else {
+      statusPill.className = "badge badge-idle";
+      statusPill.textContent = "Rehearsal Mode Active (Offline/Demo)";
+    }
+
+    document.getElementById("seed-db-btn").onclick = async () => {
+      try {
+        const msg = await seedInitialDatabase();
+        statusMsg.style.color = "var(--msrtc-green)";
+        statusMsg.textContent = "✅ " + msg;
+      } catch (err) {
+        statusMsg.style.color = "var(--msrtc-red)";
+        statusMsg.textContent = "❌ Error seeding database: " + err.message;
+      }
+    };
+
+    document.getElementById("reset-db-btn").onclick = async () => {
+      localStorage.clear();
+      await seedInitialDatabase();
+      statusMsg.style.color = "var(--msrtc-green)";
+      statusMsg.textContent = "✅ Demo memory successfully refreshed!";
+      setTimeout(() => location.reload(), 800);
+    };
+  </script>
+</body>
+</html>

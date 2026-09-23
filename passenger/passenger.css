@@ -1,0 +1,162 @@
+/**
+ * BusSaathi - Passenger Stylesheet
+ * File: /passenger/passenger.css
+ */
+
+.passenger-tabs {
+  display: flex;
+  background: #EAECEE;
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 18px;
+  gap: 4px;
+}
+
+.passenger-tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--msrtc-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.passenger-tab.active {
+  background: #ffffff;
+  color: var(--msrtc-red);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.bus-result-card {
+  background: #ffffff;
+  border: 1px solid var(--msrtc-line);
+  border-left: 5px solid var(--msrtc-red);
+  border-radius: var(--msrtc-radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.bus-result-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.bus-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.bus-plate {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--msrtc-dark);
+  letter-spacing: 0.5px;
+  background: #F8F9F9;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid #BDC3C7;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bus-route-visual {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--msrtc-ink);
+  margin: 6px 0;
+}
+
+.bus-route-arrow {
+  color: var(--msrtc-red);
+  font-weight: 800;
+}
+
+.bus-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--msrtc-line);
+  font-size: 13px;
+  color: var(--msrtc-muted);
+}
+
+/* Tracking Header Overlay */
+.tracker-header-card {
+  background: #ffffff;
+  border: 1px solid var(--msrtc-line);
+  border-radius: var(--msrtc-radius);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  box-shadow: var(--msrtc-shadow);
+}
+
+.progress-container {
+  background: #E5E8E8;
+  height: 8px;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 10px 0 6px;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--msrtc-amber), var(--msrtc-green));
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.eta-pill {
+  background: #E8F8F5;
+  color: #117A65;
+  border: 1px solid #A3E4D7;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.custom-bus-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--msrtc-red);
+  color: #ffffff;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  font-size: 18px;
+}
+
+.custom-stop-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: var(--msrtc-dark);
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  font-size: 13px;
+}
