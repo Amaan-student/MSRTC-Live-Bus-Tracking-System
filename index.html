@@ -13,14 +13,69 @@
   
   <style>
     .hero-section {
-      background: linear-gradient(135deg, #C0392B 0%, #962D22 60%, #1E3320 100%);
-      color: #ffffff;
-      padding: 36px 20px 42px;
+      position: relative;
       border-radius: var(--msrtc-radius);
       margin-bottom: 24px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-      position: relative;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: var(--msrtc-dark);
+    }
+    .hero-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      object-position: center;
+      z-index: 1;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(164, 22, 26, 0.88) 0%, rgba(28, 36, 30, 0.90) 100%);
+      z-index: 2;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      color: #ffffff;
+      padding: 32px 22px;
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .hero-section {
+        max-height: 300px;
+      }
+      .hero-content {
+        padding: 36px 28px;
+      }
+    }
+    .role-card-thumb-wrap {
+      width: 100%;
+      height: 130px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      background: #EAECEE;
+      border: 1px solid var(--msrtc-line);
+    }
+    .role-card-thumb {
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .role-card:hover .role-card-thumb {
+      transform: scale(1.04);
     }
     .hero-section::after {
       content: "ST";
@@ -108,23 +163,27 @@
     
     <!-- Hero Project Overview Banner -->
     <section class="hero-section">
-      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-        <span class="research-badge" style="background: var(--msrtc-amber); color: var(--msrtc-dark);">
-          State Level Research Project
-        </span>
-        <span class="problem-pill">MSRTC Digital Transformation</span>
-      </div>
-      <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 8px;">
-        Smart Public Transit & Fleet Management Platform
-      </h2>
-      <p style="font-size: 16px; max-width: 820px; opacity: 0.94; margin-bottom: 18px;">
-        BusSaathi solves three critical bottlenecks in Maharashtra State Transport: the lack of live bus tracking for rural and intercity passengers, overcrowding at bus stand inquiry counters, and manual, paper-based breakdown and revenue reporting.
-      </p>
-      
-      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <span class="problem-pill">📍 Real-time Passenger GPS Tracking</span>
-        <span class="problem-pill">📱 Conductor Smartphone-based Telemetry</span>
-        <span class="problem-pill">🖥️ Depot Controller Command Room</span>
+      <img src="assets/images/lal-pari.jpg" alt="MSRTC Lal Pari bus on Maharashtra highway" class="hero-bg-img">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+          <span class="research-badge" style="background: var(--msrtc-amber); color: var(--msrtc-dark);">
+            State Level Research Project
+          </span>
+          <span class="problem-pill">MSRTC Digital Transformation</span>
+        </div>
+        <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 8px;">
+          Smart Public Transit & Fleet Management Platform
+        </h2>
+        <p style="font-size: 16px; max-width: 820px; opacity: 0.94; margin-bottom: 18px;">
+          BusSaathi solves three critical bottlenecks in Maharashtra State Transport: the lack of live bus tracking for rural and intercity passengers, overcrowding at bus stand inquiry counters, and manual, paper-based breakdown and revenue reporting.
+        </p>
+        
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <span class="problem-pill">📍 Real-time Passenger GPS Tracking</span>
+          <span class="problem-pill">📱 Conductor Smartphone-based Telemetry</span>
+          <span class="problem-pill">🖥️ Depot Controller Command Room</span>
+        </div>
       </div>
     </section>
 
@@ -154,8 +213,8 @@
       <!-- 1. Passenger Portal -->
       <a href="passenger/index.html" class="role-card" style="border-top: 5px solid var(--msrtc-red);">
         <div>
-          <div class="role-icon" style="background: #FDEDEC; color: var(--msrtc-red);">
-            👥
+          <div class="role-card-thumb-wrap">
+            <img src="assets/images/lal-pari2.jpg" alt="MSRTC Lal Pari bus for passenger transit" class="role-card-thumb">
           </div>
           <span class="badge" style="background: #FDEDEC; color: var(--msrtc-red); margin-bottom: 8px;">
             Public Access • No Login
@@ -175,8 +234,8 @@
       <!-- 2. Conductor Portal -->
       <a href="conductor/index.html" class="role-card" style="border-top: 5px solid var(--msrtc-amber);">
         <div>
-          <div class="role-icon" style="background: var(--msrtc-amber-light); color: #B7950B;">
-            🎫
+          <div class="role-card-thumb-wrap">
+            <img src="assets/images/shivshahi.jpg" alt="MSRTC Shivshahi AC bus for conductor operations" class="role-card-thumb">
           </div>
           <span class="badge" style="background: var(--msrtc-amber-light); color: #B7950B; margin-bottom: 8px;">
             Staff Login Required
@@ -196,8 +255,8 @@
       <!-- 3. Controller Dashboard -->
       <a href="controller/index.html" class="role-card" style="border-top: 5px solid var(--msrtc-green);">
         <div>
-          <div class="role-icon" style="background: var(--msrtc-green-light); color: var(--msrtc-green);">
-            🖥️
+          <div class="role-card-thumb-wrap">
+            <img src="assets/images/jijao.jpg" alt="MSRTC Jijau bus under fleet controller management" class="role-card-thumb">
           </div>
           <span class="badge" style="background: var(--msrtc-green-light); color: var(--msrtc-green); margin-bottom: 8px;">
             Admin Authority
