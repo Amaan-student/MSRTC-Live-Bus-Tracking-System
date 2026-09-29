@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BusSaathi — Ticket Booking</title>
+<style>
+  :root {
+    --red: #C0392B;
+    --orange: #E8A33D;
+    --dark: #1E3320;
+    --forest: #2C5F2D;
+    --bg: #F4F7F2;
+    --card: #FFFFFF;
+    --text-dark: #263526;
+    --text-muted: #5C6B5C;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    padding: 20px 14px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 480px;
+    padding: 22px;
+  }
+  h1 { font-size: 19px; color: var(--red); margin: 0 0 2px; }
+  p.subtitle { font-size: 12.5px; color: var(--text-muted); margin: 0 0 18px; }
+
+  .step-dots { display: flex; gap: 6px; margin-bottom: 18px; }
+  .dot { flex: 1; height: 4px; border-radius: 2px; background: #E4EADF; }
+  .dot.done { background: var(--forest); }
+
+  label { display: block; font-size: 12.5px; font-weight: 600; margin-bottom: 6px; margin-top: 12px; }
+  input[type="text"], input[type="tel"], input[type="date"], select {
+    width: 100%; padding: 10px 12px; border: 1px solid #D8E0D3;
+    border-radius: 10px; font-size: 14px; background: #FAFCF9;
+  }
+  button.primary {
+    width: 100%; margin-top: 18px; padding: 12px; background: var(--forest);
+    color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  button.primary:hover { background: #244d25; }
+  button.ghost {
+    width: 100%; margin-top: 8px; padding: 10px; background: transparent;
+    color: var(--text-muted); border: none; font-size: 13px; cursor: pointer; text-decoration: underline;
+  }
+  .error { color: #B03A2E; font-size: 12.5px; margin-top: 10px; display: none; }
+
+  .step { display: none; }
+  .step.active { display: block; }
+
+  /* Bus list */
+  .bus-item {
+    background: #F5F8F2; border-radius: 10px; padding: 12px; margin-top: 10px;
+    cursor: pointer; border: 2px solid transparent;
+  }
+  .bus-item:hover { border-color: var(--orange); }
+  .bus-item .row1 { display: flex; justify-content: space-between; align-items: center; }
+  .bus-item .num { font-weight: 700; color: var(--red); font-size: 13.5px; }
+  .bus-item .type { font-size: 10.5px; background: var(--orange); color: white; padding: 1px 8px; border-radius: 10px; }
+  .bus-item .meta { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .bus-item .fare { font-weight: 700; color: var(--forest); font-size: 14px; }
+
+  /* Seat map */
+  .seat-legend { display: flex; gap: 14px; font-size: 11px; color: var(--text-muted); margin: 10px 0; }
+  .legend-box { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 4px; vertical-align: middle; }
+  .seat-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    background: #F5F8F2; border-radius: 12px; padding: 16px; margin-top: 8px;
+  }
+  .seat {
+    aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; cursor: pointer; color: white; background: var(--moss, #97BC62);
+  }
+  .seat.booked { background: #C4C9BF; cursor: not-allowed; color: #8A9285; }
+  .seat.selected { background: var(--red); }
+  .seat.aisle-gap { visibility: hidden; }
+
+  .summary-row { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px dashed #E4EADF; }
+  .summary-row.total { font-weight: 700; font-size: 15px; color: var(--forest); border-bottom: none; margin-top: 6px; }
+
+  /* Confirmation */
+  .ticket {
+    background: var(--dark); color: white; border-radius: 14px; padding: 18px; text-align: center; margin-top: 6px;
+  }
+  .ticket .pnr { font-size: 22px; font-weight: 700; color: var(--orange); letter-spacing: 1px; }
+  .ticket .lbl { font-size: 11px; color: #9FB89F; margin-top: 2px; }
+  .ticket .detail { text-align: left; margin-top: 14px; font-size: 12.5px; border-top: 1px dashed #3A5C3B; padding-top: 12px; }
+  .ticket .detail div { display: flex; justify-content: space-between; padding: 3px 0; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>🎫 BusSaathi — Book Ticket</h1>
+  <p class="subtitle">Search, select seats, and confirm — simulated booking demo.</p>
+
+  <div class="step-dots">
+    <div class="dot done" id="dot1"></div>
+    <div class="dot" id="dot2"></div>
+    <div class="dot" id="dot3"></div>
+    <div class="dot" id="dot4"></div>
+  </div>
+
+  <!-- STEP 1: Search -->
+  <div class="step active" id="step1">
+    <label>From</label>
+    <select id="fromSelect"></select>
+    <label>To</label>
+    <select id="toSelect"></select>
+    <label>Date of Travel</label>
+    <input type="date" id="travelDate">
+    <button class="primary" onclick="searchBuses()">Search Buses</button>
+    <div class="error" id="errorSearch"></div>
+  </div>
+
+  <!-- STEP 2: Bus list -->
+  <div class="step" id="step2">
+    <div id="busListArea"></div>
+    <button class="ghost" onclick="goToStep(1)">← Back to search</button>
+  </div>
+
+  <!-- STEP 3: Seat selection -->
+  <div class="step" id="step3">
+    <div id="selectedBusInfo" style="font-size:13px; font-weight:700; color: var(--dark);"></div>
+    <div class="seat-legend">
+      <span><span class="legend-box" style="background:#97BC62;"></span>Available</span>
+      <span><span class="legend-box" style="background:#C4C9BF;"></span>Booked</span>
+      <span><span class="legend-box" style="background:#C0392B;"></span>Selected</span>
+    </div>
+    <div class="seat-grid" id="seatGrid"></div>
+    <div style="margin-top:14px;">
+      <div class="summary-row"><span>Selected seats</span><span id="selectedSeatsText">None</span></div>
+      <div class="summary-row total"><span>Total fare</span><span id="totalFareText">₹0</span></div>
+    </div>
+    <button class="primary" onclick="goToPassengerDetails()">Continue</button>
+    <div class="error" id="errorSeats"></div>
+    <button class="ghost" onclick="goToStep(2)">← Back to bus list</button>
+  </div>
+
+  <!-- STEP 4: Passenger details + confirmation -->
+  <div class="step" id="step4">
+    <div id="passengerFormArea"></div>
+  </div>
+
+</div>
+
+<script>
+  // ============================================================
+  // MOCK DATA
+  // ============================================================
+  const cities = ["Nanded", "Latur", "Parbhani", "Hingoli", "Chh. Sambhajinagar"];
+
+  const buses = [
+    { number: "MH26 AB 1234", type: "Shivshahi", from: "Nanded", to: "Latur",   departure: "06:30 AM", duration: "3h 15m", fare: 210 },
+    { number: "MH26 AC 5678", type: "Lal Pari",  from: "Nanded", to: "Latur",   departure: "08:00 AM", duration: "3h 45m", fare: 150 },
+    { number: "MH26 AD 4321", type: "Shivneri",  from: "Nanded", to: "Parbhani",departure: "07:15 AM", duration: "1h 40m", fare: 180 },
+    { number: "MH26 AE 9999", type: "Lal Pari",  from: "Nanded", to: "Hingoli", departure: "09:00 AM", duration: "2h 10m", fare: 120 },
+    { number: "MH20 BF 2222", type: "Shivshahi", from: "Chh. Sambhajinagar", to: "Nanded", departure: "06:00 AM", duration: "4h 30m", fare: 280 },
+  ];
+
+  let currentBus = null;
+  let selectedSeats = [];
+  let bookedSeats = ["A2", "B4", "C1", "D6"]; // pre-booked demo seats
+
+  // ============================================================
+  // INIT
+  // ============================================================
+  function populateCities() {
+    const f = document.getElementById('fromSelect');
+    const t = document.getElementById('toSelect');
+    f.innerHTML = cities.map(c => <option>${c}</option>).join('');
+    t.innerHTML = cities.map(c => <option>${c}</option>).join('');
+    t.value = cities[1];
+  }
+  populateCities();
+  document.getElementById('travelDate').valueAsDate = new Date();
+
+  function goToStep(n) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step' + n).classList.add('active');
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById('dot' + i).classList.toggle('done', i <= n);
+    }
+  }
+
+  // ============================================================
+  // STEP 1: SEARCH
+  // ============================================================
+  function searchBuses() {
+    const from = document.getElementById('fromSelect').value;
+    const to = document.getElementById('toSelect').value;
+    const err = document.getElementById('errorSearch');
+
+    if (from === to) {
+      err.textContent = "Please select two different cities.";
+      err.style.display = 'block';
+      return;
+    }
+    const matches = buses.filter(b => b.from === from && b.to === to);
+    err.style.display = 'none';
+
+    const area = document.getElementById('busListArea');
+    if (matches.length === 0) {
+      area.innerHTML = <p style="font-size:13px;color:#5C6B5C;">No buses found on this route (demo data is limited — try Nanded → Latur).</p>;
+    } else {
+      area.innerHTML = matches.map((b, i) => `
+        <div class="bus-item" onclick="selectBus(${buses.indexOf(b)})">
+          <div class="row1">
+            <span><span class="num">${b.number}</span> <span class="type">${b.type}</span></span>
+            <span class="fare">₹${b.fare}</span>
+          </div>
+          <div class="meta">${b.from} → ${b.to} · Departs ${b.departure} · ${b.duration}</div>
+        </div>
+      `).join('');
+    }
+    goToStep(2);
+  }
+
+  // ============================================================
+  // STEP 2 → STEP 3: SEAT SELECTION
+  // ============================================================
+  function selectBus(index) {
+    currentBus = buses[index];
+    selectedSeats = [];
+    document.getElementById('selectedBusInfo').textContent =
+      ${currentBus.number} (${currentBus.type}) — ${currentBus.from} → ${currentBus.to}, ${currentBus.departure};
+
+    renderSeatGrid();
+    updateSeatSummary();
+    goToStep(3);
+  }
+
+  function renderSeatGrid() {
+    const grid = document.getElementById('seatGrid');
+    grid.innerHTML = '';
+    const rows = ["A", "B", "C", "D", "E", "F"];
+    rows.forEach(row => {
+      [1, 2].forEach(col => {
+        const seatId = row + col;
+        grid.appendChild(makeSeatEl(seatId));
+      });
+      const gap = document.createElement('div');
+      gap.className = 'seat aisle-gap';
+      grid.appendChild(gap);
+      [3, 4].forEach(col => {
+        const seatId = row + col;
+        grid.appendChild(makeSeatEl(seatId));
+      });
+    });
+  }
+
+  function makeSeatEl(seatId) {
+    const el = document.createElement('div');
+    el.className = 'seat';
+    el.textContent = seatId;
+    if (bookedSeats.includes(seatId)) {
+      el.classList.add('booked');
+    } else {
+      el.onclick = () => toggleSeat(seatId, el);
+    }
+    return el;
+  }
+
+  function toggleSeat(seatId, el) {
+    if (selectedSeats.includes(seatId)) {
+      selectedSeats = selectedSeats.filter(s => s !== seatId);
+      el.classList.remove('selected');
+    } else {
+      if (selectedSeats.length >= 6) return; // simple cap for demo
+      selectedSeats.push(seatId);
+      el.classList.add('selected');
+    }
+    updateSeatSummary();
+  }
+
+  function updateSeatSummary() {
+    document.getElementById('selectedSeatsText').textContent = selectedSeats.length ? selectedSeats.join(', ') : 'None';
+    document.getElementById('totalFareText').textContent = '₹' + (selectedSeats.length * (currentBus ? currentBus.fare : 0));
+  }
+
+  function goToPassengerDetails() {
+    const err = document.getElementById('errorSeats');
+    if (selectedSeats.length === 0) {
+      err.textContent = "Please select at least one seat.";
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+    renderPassengerForm();
+    goToStep(4);
+  }
+
+  // ============================================================
+  // STEP 4: PASSENGER DETAILS + CONFIRM
+  // ============================================================
+  function renderPassengerForm() {
+    const area = document.getElementById('passengerFormArea');
+    area.innerHTML = `
+      <label>Passenger Name</label>
+      <input type="text" id="passName" placeholder="e.g. Amaan Khan">
+      <label>Age</label>
+      <input type="text" id="passAge" placeholder="e.g. 24">
+      <label>Gender</label>
+      <select id="passGender"><option>Male</option><option>Female</option><option>Other</option></select>
+      <label>Mobile Number</label>
+      <input type="tel" id="passPhone" placeholder="10-digit mobile number">
+      <button class="primary" onclick="confirmBooking()">Confirm Booking</button>
+      <div class="error" id="errorPassenger"></div>
+      <button class="ghost" onclick="goToStep(3)">← Back to seat selection</button>
+    `;
+  }
+
+  function confirmBooking() {
+    const name = document.getElementById('passName').value.trim();
+    const age = document.getElementById('passAge').value.trim();
+    const phone = document.getElementById('passPhone').value.trim();
+    const gender = document.getElementById('passGender').value;
+    const err = document.getElementById('errorPassenger');
+
+    if (!name || !age || !/^\d{10}$/.test(phone)) {
+      err.textContent = "Please fill all fields with a valid 10-digit mobile number.";
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+
+    const pnr = 'BS' + Math.floor(100000 + Math.random() * 900000);
+    const totalFare = selectedSeats.length * currentBus.fare;
+
+    document.getElementById('passengerFormArea').innerHTML = `
+      <div class="ticket">
+        <div class="pnr">${pnr}</div>
+        <div class="lbl">Booking Confirmed (Simulated Demo)</div>
+        <div class="detail">
+          <div><span>Passenger</span><span>${name} (${age}, ${gender})</span></div>
+          <div><span>Bus</span><span>${currentBus.number} — ${currentBus.type}</span></div>
+          <div><span>Route</span><span>${currentBus.from} → ${currentBus.to}</span></div>
+          <div><span>Departure</span><span>${currentBus.departure}</span></div>
+          <div><span>Seats</span><span>${selectedSeats.join(', ')}</span></div>
+          <div><span>Mobile</span><span>${phone}</span></div>
+          <div><span>Total Fare</span><span>₹${totalFare}</span></div>
+        </div>
+      </div>
+      <button class="primary" onclick="location.reload()">Book Another Ticket</button>
+    `;
+  }
+</script>
+
+</body>
+</html>
