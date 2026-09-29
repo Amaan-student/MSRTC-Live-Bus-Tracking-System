@@ -1,0 +1,320 @@
+/**
+ * BusSaathi - MSRTC Online Bus Reservation / Ticket Booking
+ * File: /booking/booking.css
+ * 
+ * Design Guidelines:
+ * - Brand Colors: Red #C0392B, Amber #E8A33D, Forest Green #2C5F2D, Dark #1E3320
+ * - Responsive: 360px mobile to desktop with no horizontal scroll
+ * - Touch Accessibility: All seats and buttons have minimum 40px tap targets
+ */
+
+/* Step Wizard Progress Bar */
+.booking-progress-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.booking-step-dot {
+  flex: 1;
+  height: 6px;
+  border-radius: 99px;
+  background: #E5E8E8;
+  transition: background-color 0.3s ease;
+}
+
+.booking-step-dot.done {
+  background: var(--msrtc-green);
+}
+
+.booking-step-dot.active {
+  background: var(--msrtc-amber);
+}
+
+.booking-step-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--msrtc-muted);
+  font-weight: 700;
+  margin-top: -12px;
+  margin-bottom: 18px;
+  padding: 0 4px;
+}
+
+.booking-step-labels span.active {
+  color: var(--msrtc-red);
+}
+
+/* Step Containers */
+.booking-step {
+  display: none;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.booking-step.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Bus Search Results */
+.booking-bus-card {
+  background: #ffffff;
+  border: 1px solid var(--msrtc-line);
+  border-left: 5px solid var(--msrtc-red);
+  border-radius: var(--msrtc-radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.booking-bus-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--msrtc-amber);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.booking-bus-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.booking-bus-fare {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--msrtc-green);
+}
+
+/* Seat Selection Map */
+.bus-cabin-container {
+  background: #F8FAF8;
+  border: 2px solid var(--msrtc-line);
+  border-radius: 16px;
+  padding: 20px 16px;
+  margin: 16px 0;
+  position: relative;
+}
+
+.bus-cabin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 2px dashed var(--msrtc-line);
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--msrtc-muted);
+}
+
+.steering-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #EAECEE;
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: var(--msrtc-dark);
+}
+
+/* 2+2 Grid with Center Aisle */
+.seat-grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) 28px repeat(2, 1fr);
+  gap: 10px;
+  justify-content: center;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.seat-tap-btn {
+  min-width: 44px;
+  min-height: 44px;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+/* Seat States */
+.seat-tap-btn.available {
+  background: #27AE60;
+  color: #ffffff;
+  border-color: #219653;
+  box-shadow: 0 2px 4px rgba(39, 174, 96, 0.25);
+}
+
+.seat-tap-btn.available:hover {
+  background: #219653;
+  transform: scale(1.06);
+}
+
+.seat-tap-btn.booked {
+  background: #D5DBDB;
+  color: #7F8C8D;
+  border-color: #BDC3C7;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.seat-tap-btn.selected {
+  background: var(--msrtc-red);
+  color: #ffffff;
+  border-color: var(--msrtc-red-dark);
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.35);
+  transform: scale(1.06);
+}
+
+.seat-aisle-spacer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #BDC3C7;
+  font-size: 10px;
+  font-weight: 700;
+  user-select: none;
+}
+
+/* Seat Legend */
+.seat-legend-bar {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--msrtc-muted);
+  margin: 12px 0 16px;
+  flex-wrap: wrap;
+}
+
+.seat-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-square {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* Summary Box */
+.booking-summary-box {
+  background: #ffffff;
+  border: 1px solid var(--msrtc-line);
+  border-radius: var(--msrtc-radius);
+  padding: 14px 18px;
+  margin-top: 14px;
+}
+
+.summary-data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 14px;
+  border-bottom: 1px dashed var(--msrtc-line);
+}
+
+.summary-data-row.total-row {
+  border-bottom: none;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--msrtc-green);
+  padding-top: 10px;
+}
+
+/* Demo Payment Banner */
+.demo-payment-alert {
+  background: #FEF9E7;
+  border: 2px dashed var(--msrtc-amber);
+  border-radius: var(--msrtc-radius);
+  padding: 14px 16px;
+  margin: 14px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+  color: #7D6608;
+}
+
+/* Digital Boarding Pass Ticket */
+.ticket-boarding-pass {
+  background: #ffffff;
+  border: 2px solid var(--msrtc-dark);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  margin: 16px 0;
+}
+
+.ticket-header {
+  background: linear-gradient(135deg, var(--msrtc-red) 0%, var(--msrtc-dark) 100%);
+  color: #ffffff;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-pnr {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--msrtc-amber);
+  letter-spacing: 1.5px;
+  font-family: monospace;
+}
+
+.ticket-body {
+  padding: 20px;
+}
+
+.ticket-perforation {
+  border-top: 2px dashed #BDC3C7;
+  position: relative;
+  margin: 16px -20px;
+}
+
+.ticket-perforation::before,
+.ticket-perforation::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  background: var(--msrtc-bg);
+  border-radius: 50%;
+}
+
+.ticket-perforation::before { left: -10px; }
+.ticket-perforation::after { right: -10px; }
+
+/* Status Lookup Card */
+.lookup-toggle-card {
+  background: #ffffff;
+  border: 1px dashed var(--msrtc-amber);
+  border-radius: var(--msrtc-radius);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}

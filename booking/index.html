@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#C0392B">
+  <title>MSRTC Online Bus Reservation - BusSaathi</title>
+
+  <!-- Typography & Shared Styling -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/styles.css">
+  <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+
+  <!-- Top Header with Unified Navigation -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="../index.html" class="brand-group">
+        <div class="brand-emblem">ST</div>
+        <div class="brand-titles">
+          <h1>BusSaathi • Online Ticket Booking</h1>
+          <span>MSRTC Advance Seat Reservation System</span>
+        </div>
+      </a>
+      <div class="header-nav">
+        <a href="../index.html" class="header-btn">🏠 Home</a>
+        <a href="../passenger/index.html" class="header-btn">👥 Passenger</a>
+        <a href="../conductor/index.html" class="header-btn">🎫 Conductor</a>
+        <a href="../controller/index.html" class="header-btn">🖥️ Controller</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="narrow-container">
+
+    <!-- PNR Status Quick Lookup Box -->
+    <div class="lookup-toggle-card">
+      <div>
+        <strong style="font-size: 14px; color: var(--msrtc-dark);">Already have a booked ticket?</strong>
+        <p style="font-size: 12px; color: var(--msrtc-muted); margin: 0;">Enter your 8-character PNR code to view your digital ticket.</p>
+      </div>
+      <button id="toggle-pnr-lookup-btn" class="btn btn-outline btn-sm" type="button">
+        🔍 Check PNR
+      </button>
+    </div>
+
+    <!-- PNR Lookup Form Panel (Collapsible) -->
+    <div id="pnr-lookup-panel" class="card" style="display: none; border-left: 5px solid var(--msrtc-amber);">
+      <h3 style="font-size: 16px; font-weight: 700; color: var(--msrtc-dark); margin-bottom: 8px;">
+        MSRTC Ticket Status Enquiry
+      </h3>
+      <div style="display: flex; gap: 8px;">
+        <input 
+          type="text" 
+          id="pnr-query-input" 
+          class="form-control" 
+          placeholder="e.g. BS-849201" 
+          autocapitalize="characters"
+        >
+        <button id="fetch-pnr-btn" class="btn btn-accent btn-sm" type="button" style="white-space: nowrap;">
+          Search PNR
+        </button>
+      </div>
+      <div id="pnr-result-area" style="margin-top: 12px;"></div>
+    </div>
+
+    <!-- BOOKING FLOW WIZARD -->
+    <div class="card card-highlight">
+      
+      <!-- Wizard Progress Dots -->
+      <div class="booking-progress-bar">
+        <div class="booking-step-dot done" id="dot1"></div>
+        <div class="booking-step-dot" id="dot2"></div>
+        <div class="booking-step-dot" id="dot3"></div>
+        <div class="booking-step-dot" id="dot4"></div>
+      </div>
+      <div class="booking-step-labels">
+        <span id="label-step1" class="active">1. Search Route</span>
+        <span id="label-step2">2. Select Bus</span>
+        <span id="label-step3">3. Pick Seats</span>
+        <span id="label-step4">4. Confirmation</span>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- STEP 1: ROUTE & TRAVEL DATE SEARCH                            -->
+      <!-- ============================================================= -->
+      <div class="booking-step active" id="step1">
+        <h2 style="font-size: 18px; font-weight: 800; color: var(--msrtc-dark); margin-bottom: 12px;">
+          Find MSRTC Buses & Check Seat Availability
+        </h2>
+
+        <div class="form-group">
+          <label for="fromSelect" class="form-label">From (Departure Stand):</label>
+          <select id="fromSelect" class="form-control"></select>
+        </div>
+
+        <div style="display: flex; justify-content: center; margin: -4px 0 10px;">
+          <button id="swapCitiesBtn" class="btn btn-outline btn-sm" type="button">
+            ⇅ Swap Origin & Destination
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label for="toSelect" class="form-label">To (Destination Stand):</label>
+          <select id="toSelect" class="form-control"></select>
+        </div>
+
+        <div class="form-group">
+          <label for="travelDate" class="form-label">Date of Travel:</label>
+          <input type="date" id="travelDate" class="form-control" required>
+        </div>
+
+        <button id="searchBusesBtn" class="btn btn-primary btn-full btn-lg" type="button" style="margin-top: 14px;">
+          Search Available Buses →
+        </button>
+
+        <div class="alert alert-danger" id="errorSearch" style="display: none; margin-top: 14px;"></div>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- STEP 2: BUS SELECTION LIST                                    -->
+      <!-- ============================================================= -->
+      <div class="booking-step" id="step2">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px;">
+          <h2 style="font-size: 18px; font-weight: 800; color: var(--msrtc-dark); margin: 0;">
+            Select Bus Service
+          </h2>
+          <span id="selectedRouteSummary" style="font-size: 13px; color: var(--msrtc-muted); font-weight: 600;"></span>
+        </div>
+
+        <div id="busListArea">
+          <!-- Dynamically populated by booking.js -->
+        </div>
+
+        <button id="backToStep1Btn" class="btn btn-outline btn-full" type="button" style="margin-top: 14px;">
+          ← Modify Route or Date
+        </button>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- STEP 3: 2+2 SEAT MAP SELECTION                                -->
+      <!-- ============================================================= -->
+      <div class="booking-step" id="step3">
+        <div id="selectedBusInfoBox" style="background: #F4F6F4; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px;">
+          <!-- Bus details filled dynamically -->
+        </div>
+
+        <!-- Seat Color Legend -->
+        <div class="seat-legend-bar">
+          <div class="seat-legend-item">
+            <span class="legend-square" style="background: #27AE60;"></span>
+            <span>Available</span>
+          </div>
+          <div class="seat-legend-item">
+            <span class="legend-square" style="background: #BDC3C7;"></span>
+            <span>Booked</span>
+          </div>
+          <div class="seat-legend-item">
+            <span class="legend-square" style="background: var(--msrtc-red);"></span>
+            <span>Selected</span>
+          </div>
+        </div>
+
+        <!-- 2+2 Bus Cabin Layout -->
+        <div class="bus-cabin-container">
+          <div class="bus-cabin-header">
+            <span>Entry Door 🚪</span>
+            <span class="steering-icon">☸ Driver Cabin</span>
+          </div>
+
+          <div class="seat-grid-2x2" id="seatGrid">
+            <!-- 2+2 layout rendered dynamically by booking.js -->
+          </div>
+        </div>
+
+        <!-- Booking Fare Summary -->
+        <div class="booking-summary-box">
+          <div class="summary-data-row">
+            <span>Selected Seats:</span>
+            <strong id="selectedSeatsText">None</strong>
+          </div>
+          <div class="summary-data-row">
+            <span>Fare Per Seat:</span>
+            <strong id="farePerSeatText">₹ 0</strong>
+          </div>
+          <div class="summary-data-row total-row">
+            <span>Total Payable:</span>
+            <span id="totalFareText">₹ 0</span>
+          </div>
+        </div>
+
+        <button id="goToPassengerBtn" class="btn btn-primary btn-full btn-lg" type="button" style="margin-top: 14px;">
+          Continue to Passenger Details →
+        </button>
+
+        <div class="alert alert-danger" id="errorSeats" style="display: none; margin-top: 12px;"></div>
+
+        <button id="backToStep2Btn" class="btn btn-outline btn-full" type="button" style="margin-top: 8px;">
+          ← Back to Bus Services
+        </button>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- STEP 4: PASSENGER DETAILS & DEMO CONFIRMATION                 -->
+      <!-- ============================================================= -->
+      <div class="booking-step" id="step4">
+        <h2 style="font-size: 18px; font-weight: 800; color: var(--msrtc-dark); margin-bottom: 8px;">
+          Passenger Information & Confirmation
+        </h2>
+
+        <!-- Demo Payment Warning -->
+        <div class="demo-payment-alert">
+          <div style="font-size: 24px;">💳</div>
+          <div>
+            <strong>Demo Simulation Mode:</strong> No real payment gateway or bank charges are involved. Seat reservations are written directly to the Firebase transport database.
+          </div>
+        </div>
+
+        <!-- Booking Fare Review -->
+        <div class="booking-summary-box" style="margin-bottom: 16px;">
+          <div class="summary-data-row">
+            <span>Service:</span>
+            <strong id="reviewBusName">--</strong>
+          </div>
+          <div class="summary-data-row">
+            <span>Journey Date:</span>
+            <strong id="reviewTravelDate">--</strong>
+          </div>
+          <div class="summary-data-row">
+            <span>Seats:</span>
+            <strong id="reviewSeats" style="color: var(--msrtc-red);">--</strong>
+          </div>
+          <div class="summary-data-row total-row">
+            <span>Final Amount:</span>
+            <span id="reviewTotalFare">₹ 0</span>
+          </div>
+        </div>
+
+        <!-- Passenger Form -->
+        <form id="passengerDetailsForm">
+          <div class="form-group">
+            <label for="passName" class="form-label">Primary Passenger Full Name:</label>
+            <input type="text" id="passName" class="form-control" placeholder="e.g. Ramesh Kulkarni" required>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="passAge" class="form-label">Age (Years):</label>
+              <input type="number" id="passAge" class="form-control" placeholder="e.g. 28" min="1" max="110" required>
+            </div>
+            <div class="form-group">
+              <label for="passGender" class="form-label">Gender:</label>
+              <select id="passGender" class="form-control" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="passPhone" class="form-label">10-Digit Mobile Number:</label>
+            <input 
+              type="tel" 
+              id="passPhone" 
+              class="form-control" 
+              placeholder="e.g. 9876543210" 
+              pattern="[0-9]{10}"
+              maxlength="10" 
+              required
+            >
+            <small style="color: var(--msrtc-muted); font-size: 12px;">SMS with PNR and bus updates will be sent to this number.</small>
+          </div>
+
+          <button type="submit" id="confirmBookingBtn" class="btn btn-green btn-full btn-lg" style="margin-top: 14px;">
+            🔒 Reserve Seats & Generate PNR Ticket
+          </button>
+        </form>
+
+        <div class="alert alert-danger" id="errorPassenger" style="display: none; margin-top: 12px;"></div>
+
+        <button id="backToStep3Btn" class="btn btn-outline btn-full" type="button" style="margin-top: 8px;">
+          ← Back to Seat Selection
+        </button>
+      </div>
+
+      <!-- ============================================================= -->
+      <!-- CONFIRMATION: DIGITAL BOARDING PASS TICKET                    -->
+      <!-- ============================================================= -->
+      <div class="booking-step" id="stepConfirmation">
+        <div class="alert alert-success" style="margin-bottom: 14px;">
+          <span>✅</span>
+          <strong>Reservation Confirmed!</strong> Your MSRTC digital boarding pass has been issued.
+        </div>
+
+        <div class="ticket-boarding-pass" id="printableTicket">
+          <div class="ticket-header">
+            <div>
+              <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">
+                MSRTC Digital Boarding Pass
+              </span>
+              <div class="ticket-pnr" id="ticketPnr">BS-000000</div>
+            </div>
+            <span class="badge" style="background: var(--msrtc-amber); color: var(--msrtc-dark);">
+              CONFIRMED
+            </span>
+          </div>
+
+          <div class="ticket-body">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+              <div>
+                <h3 id="ticketBusNumber" style="font-size: 18px; font-weight: 800; color: var(--msrtc-dark); margin: 0;">
+                  MH 20 BL 4040
+                </h3>
+                <span id="ticketBusType" class="badge type-shivshahi">Shivshahi</span>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-size: 12px; color: var(--msrtc-muted);">Travel Date</span>
+                <div id="ticketTravelDate" style="font-weight: 800; font-size: 14px;">--</div>
+              </div>
+            </div>
+
+            <div style="font-size: 16px; font-weight: 700; margin: 12px 0 6px; display: flex; align-items: center; gap: 8px;">
+              <span id="ticketFrom">Pune</span>
+              <span style="color: var(--msrtc-red);">➔</span>
+              <span id="ticketTo">Chh. Sambhajinagar</span>
+            </div>
+
+            <div class="ticket-perforation"></div>
+
+            <div class="grid-2" style="font-size: 13.5px; margin-top: 12px;">
+              <div>
+                <span style="color: var(--msrtc-muted);">Passenger:</span><br>
+                <strong id="ticketPassengerName">--</strong>
+              </div>
+              <div>
+                <span style="color: var(--msrtc-muted);">Contact:</span><br>
+                <strong id="ticketPassengerPhone">--</strong>
+              </div>
+              <div style="margin-top: 8px;">
+                <span style="color: var(--msrtc-muted);">Allocated Seats:</span><br>
+                <strong id="ticketSeats" style="color: var(--msrtc-red); font-size: 16px;">--</strong>
+              </div>
+              <div style="margin-top: 8px;">
+                <span style="color: var(--msrtc-muted);">Total Fare Paid:</span><br>
+                <strong id="ticketTotalFare" style="color: var(--msrtc-green); font-size: 16px;">₹ 0</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 16px;">
+          <button id="printTicketBtn" class="btn btn-outline btn-full" type="button">
+            🖨️ Print Ticket
+          </button>
+          <button id="bookAnotherBtn" class="btn btn-primary btn-full" type="button">
+            Book Another Ticket
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p><strong>BusSaathi Online Reservation</strong> • Maharashtra State Road Transport Corporation Prototype</p>
+  </footer>
+
+  <!-- Booking Application Logic -->
+  <script type="module" src="booking.js"></script>
+</body>
+</html>
