@@ -30,7 +30,20 @@ export const MAHARASHTRA_CITIES = {
   "Amravati (CBS)": { lat: 20.9374, lon: 77.7796, shortName: "Amravati" },
   "Ratnagiri (ST Stand)": { lat: 16.9902, lon: 73.3120, shortName: "Ratnagiri" },
   "Beed (ST Stand)": { lat: 18.9891, lon: 75.7601, shortName: "Beed" },
-  "Jalgaon (CBS)": { lat: 21.0077, lon: 75.5626, shortName: "Jalgaon" }
+  "Jalgaon (CBS)": { lat: 21.0077, lon: 75.5626, shortName: "Jalgaon" },
+  "Parbhani": { lat: 19.2704, lon: 76.7767, shortName: "Parbhani", rto: "MH-22" },
+  "Jintur": { lat: 19.6167, lon: 76.6833, shortName: "Jintur", rto: "MH-22" },
+  "Selu": { lat: 19.3667, lon: 76.4333, shortName: "Selu", rto: "MH-22" },
+  "Manwat": { lat: 19.2967, lon: 76.5, shortName: "Manwat", rto: "MH-22" },
+  "Sonpeth": { lat: 19.0333, lon: 76.5833, shortName: "Sonpeth", rto: "MH-22" },
+  "Gangakhed": { lat: 18.9667, lon: 76.7667, shortName: "Gangakhed", rto: "MH-22" },
+  "Palam": { lat: 19.0167, lon: 76.9833, shortName: "Palam", rto: "MH-22" },
+  "Purna": { lat: 19.1667, lon: 76.9333, shortName: "Purna", rto: "MH-22" },
+  "Pathri": { lat: 19.2667, lon: 76.4333, shortName: "Pathri", rto: "MH-22" },
+  "Nanded": { lat: 19.1383, lon: 77.321, shortName: "Nanded", rto: "MH-26" },
+  "Hingoli": { lat: 19.7145, lon: 77.1449, shortName: "Hingoli", rto: "MH-46" },
+  "Latur": { lat: 18.4088, lon: 76.5604, shortName: "Latur", rto: "MH-24" },
+  "Chh. Sambhajinagar": { lat: 19.8762, lon: 75.3433, shortName: "Chh. Sambhajinagar", rto: "MH-20" }
 };
 
 // Official MSRTC Bus Services and Color Brand Schemes
@@ -173,6 +186,526 @@ export const SEED_BUSES = {
       heading: 0,
       timestamp: Date.now() - 720000
     }
+  },
+  "MH22-AA-1001": {
+    number: "MH22 AA 1001",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Jintur",
+    departureTime: "06:00 AM",
+    departure: "06:00 AM",
+    duration: "1h 22m",
+    fare: 90,
+    distanceKm: 52,
+    conductorId: "COND_201",
+    status: "running",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 52,
+      heading: 65,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AA-1002": {
+    number: "MH22 AA 1002",
+    type: "Shivshahi",
+    from: "Parbhani",
+    to: "Jintur",
+    departureTime: "02:30 PM",
+    departure: "02:30 PM",
+    duration: "1h 10m",
+    fare: 115,
+    distanceKm: 52,
+    conductorId: "COND_202",
+    status: "running",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 52,
+      heading: 65,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AB-1003": {
+    number: "MH22 AB 1003",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Selu",
+    departureTime: "06:30 AM",
+    departure: "06:30 AM",
+    duration: "1h 17m",
+    fare: 85,
+    distanceKm: 49,
+    conductorId: "COND_203",
+    status: "running",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 52,
+      heading: 65,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AB-1004": {
+    number: "MH22 AB 1004",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Manwat",
+    departureTime: "07:00 AM",
+    departure: "07:00 AM",
+    duration: "1h 00m",
+    fare: 65,
+    distanceKm: 38,
+    conductorId: "COND_204",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AC-1005": {
+    number: "MH22 AC 1005",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Manwat",
+    departureTime: "03:00 PM",
+    departure: "03:00 PM",
+    duration: "1h 00m",
+    fare: 65,
+    distanceKm: 38,
+    conductorId: "COND_205",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AC-1006": {
+    number: "MH22 AC 1006",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Sonpeth",
+    departureTime: "07:15 AM",
+    departure: "07:15 AM",
+    duration: "1h 08m",
+    fare: 75,
+    distanceKm: 43,
+    conductorId: "COND_206",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AD-1007": {
+    number: "MH22 AD 1007",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Gangakhed",
+    departureTime: "08:00 AM",
+    departure: "08:00 AM",
+    duration: "1h 09m",
+    fare: 75,
+    distanceKm: 44,
+    conductorId: "COND_207",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AD-1008": {
+    number: "MH22 AD 1008",
+    type: "Shivshahi",
+    from: "Parbhani",
+    to: "Gangakhed",
+    departureTime: "04:00 PM",
+    departure: "04:00 PM",
+    duration: "1h 00m",
+    fare: 95,
+    distanceKm: 44,
+    conductorId: "COND_208",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AE-1009": {
+    number: "MH22 AE 1009",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Palam",
+    departureTime: "08:30 AM",
+    departure: "08:30 AM",
+    duration: "1h 12m",
+    fare: 80,
+    distanceKm: 46,
+    conductorId: "COND_209",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AE-1010": {
+    number: "MH22 AE 1010",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Purna",
+    departureTime: "09:00 AM",
+    departure: "09:00 AM",
+    duration: "0h 43m",
+    fare: 45,
+    distanceKm: 27,
+    conductorId: "COND_210",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AF-1011": {
+    number: "MH22 AF 1011",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Purna",
+    departureTime: "05:00 PM",
+    departure: "05:00 PM",
+    duration: "0h 43m",
+    fare: 45,
+    distanceKm: 27,
+    conductorId: "COND_211",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-AF-1012": {
+    number: "MH22 AF 1012",
+    type: "Lal Pari",
+    from: "Parbhani",
+    to: "Pathri",
+    departureTime: "09:30 AM",
+    departure: "09:30 AM",
+    duration: "1h 14m",
+    fare: 80,
+    distanceKm: 47,
+    conductorId: "COND_212",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-BA-2001": {
+    number: "MH22 BA 2001",
+    type: "Shivshahi",
+    from: "Parbhani",
+    to: "Nanded",
+    departureTime: "06:00 AM",
+    departure: "06:00 AM",
+    duration: "2h 02m",
+    fare: 130,
+    distanceKm: 77,
+    conductorId: "COND_213",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH26-BA-2002": {
+    number: "MH26 BA 2002",
+    type: "Lal Pari",
+    from: "Nanded",
+    to: "Parbhani",
+    departureTime: "07:30 AM",
+    departure: "07:30 AM",
+    duration: "2h 10m",
+    fare: 125,
+    distanceKm: 77,
+    conductorId: "COND_214",
+    status: "idle",
+    currentLocation: {
+      lat: 19.1383,
+      lon: 77.321,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-BB-2003": {
+    number: "MH22 BB 2003",
+    type: "Shivshahi",
+    from: "Parbhani",
+    to: "Hingoli",
+    departureTime: "07:00 AM",
+    departure: "07:00 AM",
+    duration: "2h 09m",
+    fare: 140,
+    distanceKm: 82,
+    conductorId: "COND_215",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH46-BB-2004": {
+    number: "MH46 BB 2004",
+    type: "Lal Pari",
+    from: "Hingoli",
+    to: "Parbhani",
+    departureTime: "08:00 AM",
+    departure: "08:00 AM",
+    duration: "2h 15m",
+    fare: 135,
+    distanceKm: 82,
+    conductorId: "COND_216",
+    status: "idle",
+    currentLocation: {
+      lat: 19.7145,
+      lon: 77.1449,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-BC-2005": {
+    number: "MH22 BC 2005",
+    type: "Shivneri",
+    from: "Parbhani",
+    to: "Latur",
+    departureTime: "06:30 AM",
+    departure: "06:30 AM",
+    duration: "3h 03m",
+    fare: 280,
+    distanceKm: 128,
+    conductorId: "COND_217",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH24-BC-2006": {
+    number: "MH24 BC 2006",
+    type: "Shivshahi",
+    from: "Latur",
+    to: "Parbhani",
+    departureTime: "09:00 AM",
+    departure: "09:00 AM",
+    duration: "3h 22m",
+    fare: 220,
+    distanceKm: 128,
+    conductorId: "COND_218",
+    status: "idle",
+    currentLocation: {
+      lat: 18.4088,
+      lon: 76.5604,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-BD-2007": {
+    number: "MH22 BD 2007",
+    type: "Shivneri",
+    from: "Parbhani",
+    to: "Chh. Sambhajinagar",
+    departureTime: "05:30 AM",
+    departure: "05:30 AM",
+    duration: "5h 06m",
+    fare: 470,
+    distanceKm: 214,
+    conductorId: "COND_219",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2704,
+      lon: 76.7767,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH20-BD-2008": {
+    number: "MH20 BD 2008",
+    type: "Shivshahi",
+    from: "Chh. Sambhajinagar",
+    to: "Parbhani",
+    departureTime: "10:00 AM",
+    departure: "10:00 AM",
+    duration: "5h 38m",
+    fare: 370,
+    distanceKm: 214,
+    conductorId: "COND_220",
+    status: "idle",
+    currentLocation: {
+      lat: 19.8762,
+      lon: 75.3433,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-CA-3001": {
+    number: "MH22 CA 3001",
+    type: "Lal Pari",
+    from: "Jintur",
+    to: "Selu",
+    departureTime: "07:45 AM",
+    departure: "07:45 AM",
+    duration: "1h 19m",
+    fare: 85,
+    distanceKm: 50,
+    conductorId: "COND_221",
+    status: "idle",
+    currentLocation: {
+      lat: 19.6167,
+      lon: 76.6833,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-CB-3002": {
+    number: "MH22 CB 3002",
+    type: "Lal Pari",
+    from: "Manwat",
+    to: "Sonpeth",
+    departureTime: "08:15 AM",
+    departure: "08:15 AM",
+    duration: "1h 03m",
+    fare: 70,
+    distanceKm: 40,
+    conductorId: "COND_222",
+    status: "idle",
+    currentLocation: {
+      lat: 19.2967,
+      lon: 76.5,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-CC-3003": {
+    number: "MH22 CC 3003",
+    type: "Lal Pari",
+    from: "Gangakhed",
+    to: "Palam",
+    departureTime: "09:45 AM",
+    departure: "09:45 AM",
+    duration: "0h 47m",
+    fare: 50,
+    distanceKm: 30,
+    conductorId: "COND_223",
+    status: "idle",
+    currentLocation: {
+      lat: 18.9667,
+      lon: 76.7667,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH26-CD-3004": {
+    number: "MH26 CD 3004",
+    type: "Shivshahi",
+    from: "Purna",
+    to: "Nanded",
+    departureTime: "10:15 AM",
+    departure: "10:15 AM",
+    duration: "1h 24m",
+    fare: 90,
+    distanceKm: 53,
+    conductorId: "COND_224",
+    status: "idle",
+    currentLocation: {
+      lat: 19.1667,
+      lon: 76.9333,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH22-CE-3005": {
+    number: "MH22 CE 3005",
+    type: "Lal Pari",
+    from: "Selu",
+    to: "Pathri",
+    departureTime: "11:00 AM",
+    departure: "11:00 AM",
+    duration: "0h 22m",
+    fare: 25,
+    distanceKm: 14,
+    conductorId: "COND_225",
+    status: "idle",
+    currentLocation: {
+      lat: 19.3667,
+      lon: 76.4333,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
+  },
+  "MH46-CF-3006": {
+    number: "MH46 CF 3006",
+    type: "Lal Pari",
+    from: "Hingoli",
+    to: "Jintur",
+    departureTime: "07:30 AM",
+    departure: "07:30 AM",
+    duration: "1h 41m",
+    fare: 110,
+    distanceKm: 64,
+    conductorId: "COND_226",
+    status: "idle",
+    currentLocation: {
+      lat: 19.7145,
+      lon: 77.1449,
+      speed: 0,
+      heading: 0,
+      timestamp: Date.now() - 60000
+    }
   }
 };
 
@@ -259,3 +792,7 @@ export const SEED_REVENUE = {
     timestamp: Date.now() - 86400000
   }
 };
+
+// Backward-compatibility and alias exports
+export const cities = MAHARASHTRA_CITIES;
+export const buses = Object.values(SEED_BUSES);
